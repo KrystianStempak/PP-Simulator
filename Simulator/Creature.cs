@@ -16,26 +16,16 @@ public abstract class Creature
         get => _name;
         set
         {
-            if (_name != "Unknown") return;
-
-            value = value.Trim();
-            if (value.Length > 0 && char.IsLower(value[0]))
-                value = char.ToUpper(value[0]) + value.Substring(1);
-            if (value.Length < 3) value = value.PadRight(3, '#');
-            if (value.Length > 25) value = value.Substring(0, 25).TrimEnd();
-            if (value.Length < 3) value = value.PadRight(3, '#');
-            _name = value;
+            _name = Validator.Shortener(value.Trim(), 3, 25, '#');
+            if (char.IsLower(_name[0]))
+                _name = char.ToUpper(_name[0]) + _name.Substring(1);
         }
     }
 
     public int Level
     {
         get => _level;
-        set
-        {
-            if (_level != 1) return;
-            _level = value < 1 ? 1 : (value > 10 ? 10 : value);
-        }
+        set => _level = Validator.Limiter(value, 1, 10);
     }
 
     public Creature(string name = "Unknown", int level = 1)
@@ -44,10 +34,16 @@ public abstract class Creature
         Level = level;
     }
 
-    public virtual void SayHi()
-    {
-        Console.WriteLine($"Hi, I'm {Name}, and my level is {Level}.");
-    }
+    public abstract string Info { get; }
 
     public abstract int Power { get; }
+
+    public virtual void SayHi() => Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
+
+    public void Upgrade()
+    {
+        if (Level < 10) Level++;
+    }
+
+    public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
 }

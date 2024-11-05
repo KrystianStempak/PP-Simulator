@@ -5,11 +5,19 @@ public class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Starting Simulator!\n");
-        Lab4();
+        Lab4a();
+
+        Creature c = new Elf("Elandor", 5, 3);
+        Console.WriteLine(c);  
+        c = new Orc("Gorbag", 7, 4);
+        Console.WriteLine(c);
+
+        Lab4b();
+
         Console.ReadKey();
     }
 
-    static void Lab4()
+    static void Lab4a()
     {
         Console.WriteLine("HUNT TEST\n");
         var o = new Orc("Gorbag", level: 5, rage: 7);
@@ -41,4 +49,19 @@ public class Program
             Console.WriteLine($"{creature.Name,-15}: {creature.Power}");
         }
     }
+
+    static void Lab4b()
+    {
+        object[] myObjects = {
+        new Animals() { Description = "dogs"},
+        new Birds { Description = "  eagles ", Size = 10 },
+        new Elf("E##", 10, 0),
+        new Orc("Morgash", 6, 4)
+    };
+
+        Console.WriteLine("\nMy objects:");
+        foreach (var o in myObjects)
+            Console.WriteLine(o);
+    }
+
 }
