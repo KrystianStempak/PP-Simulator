@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simulator;
 
-public class Creature
+public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
@@ -44,32 +44,10 @@ public class Creature
         Level = level;
     }
 
-    public string Info => $"{Name} [{Level}]";
-
-    public void SayHi() => Console.WriteLine($"Hi, I am {Info}!");
-
-    public void Upgrade()
+    public virtual void SayHi()
     {
-        if (Level < 10) _level++;
+        Console.WriteLine($"Hi, I'm {Name}, and my level is {Level}.");
     }
 
-    public void Go(Direction direction)
-    {
-        string directionStr = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {directionStr}.");
-    }
-
-    public void Go(Direction[] directions)
-    {
-        foreach (var direction in directions)
-        {
-            Go(direction);
-        }
-    }
-
-    public void Go(string directions)
-    {
-        var parsedDirections = DirectionParser.Parse(directions);
-        Go(parsedDirections);
-    }
+    public abstract int Power { get; }
 }
