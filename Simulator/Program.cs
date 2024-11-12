@@ -1,67 +1,98 @@
 ﻿namespace Simulator;
+using Simulator.Maps;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Starting Simulator!\n");
-        Lab4a();
 
-        Creature c = new Elf("Elandor", 5, 3);
-        Console.WriteLine(c);  
-        c = new Orc("Gorbag", 7, 4);
-        Console.WriteLine(c);
+        Point p = new(10, 25);
+        Console.WriteLine(p.Next(Direction.Right));          // (11, 25)
+        Console.WriteLine(p.NextDiagonal(Direction.Right));  // (11, 24)
 
-        Lab4b();
+        Lab5a();
+        Lab5b();
+
+
 
         Console.ReadKey();
-    }
 
-    static void Lab4a()
+
+    }
+    static void Lab5a()
     {
-        Console.WriteLine("HUNT TEST\n");
-        var o = new Orc("Gorbag", level: 5, rage: 7);
-        o.SayHi();
-        for (int i = 0; i < 10; i++)
+        try
         {
-            o.Hunt();
-            o.SayHi();
-        }
+            Console.WriteLine("Creating rectangles with various points and coordinates:");
 
-        Console.WriteLine("\nSING TEST\n");
-        var e = new Elf("Legolas", agility: 2);
-        e.SayHi();
-        for (int i = 0; i < 10; i++)
-        {
-            e.Sing();
-            e.SayHi();
-        }
+            // Test with coordinates
+            Rectangle rect1 = new Rectangle(2, 3, 10, 8);
+            Console.WriteLine(rect1);  // Expected: (2, 3):(10, 8)
 
-        Console.WriteLine("\nPOWER TEST\n");
-        Creature[] creatures = {
-            o,
-            e,
-            new Orc("Morgash", 3, 8),
-            new Elf("Elandor", 5, 3)
-        };
-        foreach (Creature creature in creatures)
+            // Test with unordered coordinates
+            Rectangle rect2 = new Rectangle(10, 8, 2, 3);
+            Console.WriteLine(rect2);  // Expected: (2, 3):(10, 8)
+
+            // Test with points
+            Point p1 = new Point(4, 5);
+            Point p2 = new Point(12, 15);
+            Rectangle rect3 = new Rectangle(p1, p2);
+            Console.WriteLine(rect3);  // Expected: (4, 5):(12, 15)
+
+            // Test collinear points exception
+            try
+            {
+                Rectangle invalidRect = new Rectangle(5, 5, 5, 10);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Exception caught: {ex.Message}");
+            }
+
+            // Test point containment
+            Point testPointInside = new Point(6, 7);
+            Point testPointOutside = new Point(1, 1);
+            Console.WriteLine($"rect1.Contains{testPointInside}: {rect1.Contains(testPointInside)}"); // Expected: True
+            Console.WriteLine($"rect1.Contains{testPointOutside}: {rect1.Contains(testPointOutside)}"); // Expected: False
+        }
+        catch (Exception ex)
         {
-            Console.WriteLine($"{creature.Name,-15}: {creature.Power}");
+            Console.WriteLine($"Unexpected exception: {ex.Message}");
         }
     }
 
-    static void Lab4b()
+    static void Lab5b()
     {
-        object[] myObjects = {
-        new Animals() { Description = "dogs"},
-        new Birds { Description = "  eagles ", Size = 10 },
-        new Elf("E##", 10, 0),
-        new Orc("Morgash", 6, 4)
-    };
+        try
+        {
+            // Test mapy o rozmiarze 10
+            var map = new SmallSquareMap(10);
+            Console.WriteLine($"Map size: {map.Size}");
 
-        Console.WriteLine("\nMy objects:");
-        foreach (var o in myObjects)
-            Console.WriteLine(o);
+            // Test punktów
+            Point start = new Point(5, 5);
+            Console.WriteLine($"Start point: {start}");
+
+            // Test Next
+            Console.WriteLine($"Next Up: {map.Next(start, Direction.Up)}");
+            Console.WriteLine($"Next Right: {map.Next(start, Direction.Right)}");
+            Console.WriteLine($"Next Down: {map.Next(start, Direction.Down)}");
+            Console.WriteLine($"Next Left: {map.Next(start, Direction.Left)}");
+
+            // Test NextDiagonal
+            Console.WriteLine($"Next Diagonal Up: {map.NextDiagonal(start, Direction.Up)}");
+            Console.WriteLine($"Next Diagonal Right: {map.NextDiagonal(start, Direction.Right)}");
+            Console.WriteLine($"Next Diagonal Down: {map.NextDiagonal(start, Direction.Down)}");
+            Console.WriteLine($"Next Diagonal Left: {map.NextDiagonal(start, Direction.Left)}");
+
+            // Test wyjścia poza mapę
+            Point outside = new Point(10, 10);
+            Console.WriteLine($"Next Outside Point: {map.Next(outside, Direction.Up)}");
+
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
-
 }
