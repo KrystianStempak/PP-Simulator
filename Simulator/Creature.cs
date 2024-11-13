@@ -38,7 +38,7 @@ public abstract class Creature
 
     public abstract int Power { get; }
 
-    public virtual void SayHi() => Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
+    public virtual string Greeting() => $"Hi, I'm {Name}, my level is {Level}.";
 
     public void Upgrade()
     {
@@ -46,4 +46,18 @@ public abstract class Creature
     }
 
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
+
+    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+
+    public string[] Go(Direction[] directions)
+    {
+        var result = new string[directions.Length];
+        for (int i = 0; i < directions.Length; i++)
+        {
+            result[i] = Go(directions[i]);
+        }
+        return result;
+    }
+
+    public string[] Go(string directionSeq) => Go(DirectionParser.Parse(directionSeq));
 }
