@@ -12,9 +12,9 @@ public static class DirectionParser
     {
         List<Direction> directions = new();
 
-        foreach (char c in input.ToUpper())
+        foreach (char ch in input.ToUpper())
         {
-            switch (c)
+            switch (ch)
             {
                 case 'U':
                     directions.Add(Direction.Up);
@@ -34,3 +34,4 @@ public static class DirectionParser
         return directions.ToArray();
     }
 }
+

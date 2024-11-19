@@ -1,0 +1,11 @@
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\bin\Debug\net8.0\Simulator.deps.json
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\bin\Debug\net8.0\Simulator.dll
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\bin\Debug\net8.0\Simulator.pdb
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.AssemblyInfoInputs.cache
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.AssemblyInfo.cs
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.csproj.CoreCompileInputs.cache
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.dll
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\refint\Simulator.dll
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\Simulator.pdb
+C:\Users\muzyk\Downloads\PP-Simulator-master\PP-Simulator-master\Simulator\obj\Debug\net8.0\ref\Simulator.dll

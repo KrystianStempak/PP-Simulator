@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace Simulator;
 public class Elf : Creature
 {
     private int _agility;
-    private int _singCount;
+    private int _singCount = 0;
 
     public int Agility
     {
@@ -17,20 +18,25 @@ public class Elf : Creature
         private set => _agility = Validator.Limiter(value, 0, 10);
     }
 
-    public Elf(string name = "Unknown", int level = 1, int agility = 1) : base(name, level)
+    public Elf(string name = "Unknown", int level = 1, int agility = 0) : base(name, level)
     {
         Agility = agility;
     }
 
-    public override string Info => $"{Name} [{Level}][{Agility}]";
+    public Elf() { }
 
-    public override int Power => Level * 8 + Agility * 2;
+    public override string Greeting() => $"Hi, my name is, what? My name is, who?\r\nMy name is, chka-chka {Name} and i move so good - {Agility}.";
 
-    public override string Greeting() => $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
 
     public void Sing()
     {
         _singCount++;
-        if (_singCount % 3 == 0 && Agility < 10) Agility++;
+        if (_singCount % 3 == 0)
+        {
+            Agility = Validator.Limiter(Agility + 1, 0, 10);
+        }
     }
+
+    public override int Power => 8 * Level + 2 * Agility;
+    public override string Info => $"{Name} [{Level}][{Agility}]";
 }

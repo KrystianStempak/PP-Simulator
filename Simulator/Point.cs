@@ -1,34 +1,38 @@
-﻿using System;
-
-namespace Simulator;
+﻿using Simulator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 public readonly struct Point
 {
     public readonly int X, Y;
-
     public Point(int x, int y) => (X, Y) = (x, y);
-
     public override string ToString() => $"({X}, {Y})";
 
-    // Zwraca nowy punkt przesunięty o jedno pole w podanym kierunku
-    public Point Next(Direction direction) =>
-        direction switch
+    public Point Next(Direction direction)
+    {
+        switch (direction)
         {
-            Direction.Up => new Point(X, Y + 1),
-            Direction.Down => new Point(X, Y - 1),
-            Direction.Left => new Point(X - 1, Y),
-            Direction.Right => new Point(X + 1, Y),
-            _ => this
-        };
+            case Direction.Up: { return new Point(X, Y + 1); }
+            case Direction.Left: { return new Point(X - 1, Y); }
+            case Direction.Down: { return new Point(X, Y - 1); }
+            case Direction.Right: { return new Point(X + 1, Y); }
+            default: return default;
+        }
+    }
 
-    // Zwraca nowy punkt przesunięty o jedno pole po skosie 45° zgodnie z ruchem wskazówek zegara
-    public Point NextDiagonal(Direction direction) =>
-        direction switch
+    // rotate given direction 45 degrees clockwise
+    public Point NextDiagonal(Direction direction)
+    {
+        switch (direction)
         {
-            Direction.Up => new Point(X + 1, Y + 1),
-            Direction.Right => new Point(X + 1, Y - 1),
-            Direction.Down => new Point(X - 1, Y - 1),
-            Direction.Left => new Point(X - 1, Y + 1),
-            _ => this
-        };
+            case Direction.Up: { return new Point(X + 1, Y + 1); }
+            case Direction.Left: { return new Point(X - 1, Y + 1); }
+            case Direction.Down: { return new Point(X - 1, Y - 1); }
+            case Direction.Right: { return new Point(X + 1, Y - 1); }
+            default: return default;
+        }
+    }
 }

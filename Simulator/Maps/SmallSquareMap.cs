@@ -1,81 +1,42 @@
 ﻿using System;
-using Simulator.Maps;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Simulator.Maps
+namespace Simulator.Maps;
+public class SmallSquareMap : Map
 {
-    /// <summary>
-    /// Represents a small square map with size between 5 and 20 points.
-    /// </summary>
-    public class SmallSquareMap : Map
+    public int Size;
+    private readonly Rectangle Limits;
+    public SmallSquareMap(int size)
     {
-        private int _size;
-
-        /// <summary>
-        /// Gets the size of the map (side length).
-        /// </summary>
-        public int Size => _size;
-
-        /// <summary>
-        /// Constructor to initialize a small square map.
-        /// Throws ArgumentOutOfRangeException if the size is not between 5 and 20.
-        /// </summary>
-        /// <param name="size">Size of the square map.</param>
-        public SmallSquareMap(int size)
+        if (Math.Abs(size) < 5 || Math.Abs(size) > 20) throw new ArgumentOutOfRangeException("Niepoprawny rozmiar.");
+        Size = size;
+        if (size < 0)
         {
-            if (size < 5 || size > 20)
-            {
-                throw new ArgumentOutOfRangeException(nameof(size), "Size must be between 5 and 20.");
-            }
-
-            _size = size;
+            Limits = new Rectangle(0, 0, size + 1, size + 1);
         }
-
-        /// <summary>
-        /// Checks if the given point is within the bounds of the map.
-        /// </summary>
-        /// <param name="p">Point to check.</param>
-        /// <returns>True if the point is within bounds of the map, otherwise false.</returns>
-        public override bool Exist(Point p)
+        else
         {
-            return p.X >= 0 && p.X < _size && p.Y >= 0 && p.Y < _size;
+            Limits = new Rectangle(0, 0, size - 1, size - 1);
         }
+    }
 
-        /// <summary>
-        /// Returns the next position to the point in a given direction.
-        /// If the move would take the point outside the map, it returns the current point.
-        /// </summary>
-        /// <param name="p">Starting point.</param>
-        /// <param name="d">Direction.</param>
-        /// <returns>Next point after moving in the specified direction, or the original point if out of bounds.</returns>
-        public override Point Next(Point p, Direction d)
-        {
-            Point next = p.Next(d);
+    public override bool Exist(Point p)
+    {
+        return Limits.Contains(p);
+    }
 
-            if (!Exist(next))
-            {
-                return p; // Return the original point if the move goes out of bounds.
-            }
+    public override Point Next(Point p, Direction d)
+    {
+        if (Exist(p.Next(d))) return p.Next(d);
+        return p;
+    }
 
-            return next;
-        }
-
-        /// <summary>
-        /// Returns the next diagonal position to the point in a given direction rotated 45 degrees clockwise.
-        /// If the move would take the point outside the map, it returns the current point.
-        /// </summary>
-        /// <param name="p">Starting point.</param>
-        /// <param name="d">Direction.</param>
-        /// <returns>Next diagonal point, or the original point if out of bounds.</returns>
-        public override Point NextDiagonal(Point p, Direction d)
-        {
-            Point next = p.NextDiagonal(d);
-
-            if (!Exist(next))
-            {
-                return p; // Return the original point if the move goes out of bounds.
-            }
-
-            return next;
-        }
+    public override Point NextDiagonal(Point p, Direction d)
+    {
+        if (Exist(p.NextDiagonal(d))) return p.NextDiagonal(d);
+        return p;
     }
 }
